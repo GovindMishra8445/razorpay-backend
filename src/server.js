@@ -33,7 +33,10 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: allowedOrigins, 
+    origin: [
+      "http://localhost:5173",
+      "https://razorpay-frontend-delta.vercel.app",
+    ],
     credentials: true,
   })
 );
