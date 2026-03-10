@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mailSender = require("../utils/mailSender");
 
-// ─── Signup ───────────────────────────────────────────────
+// ─── Signup ────────────
 exports.signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -44,7 +44,7 @@ exports.signup = async (req, res) => {
   }
 };
 
-// ─── Login ────────────────────────────────────────────────
+// ─── Login ──────────────
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -107,7 +107,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// ─── Forgot Password ──────────────────────────────────────
+// ─── Forgot Password ──────────────
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -120,14 +120,12 @@ exports.forgotPassword = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      // Security: don't reveal if email exists or not
       return res.status(200).json({
         success: true,
         message: "If this email is registered, a reset link has been sent.",
       });
     }
 
-    // Generate a short-lived reset token
     const resetToken = jwt.sign(
       { id: user._id, email: user.email, purpose: "reset" },
       process.env.JWT_SECRET,
@@ -165,7 +163,7 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-// ─── Get Profile ──────────────────────────────────────────
+// ─── Get Profile ───────────────
 exports.getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
@@ -187,7 +185,7 @@ exports.getProfile = async (req, res) => {
   }
 };
 
-// ─── Update Profile ───────────────────────────────────────
+// ─── Update Profile ───────────────
 exports.updateProfile = async (req, res) => {
   try {
     const { name, password } = req.body;
@@ -201,7 +199,6 @@ exports.updateProfile = async (req, res) => {
 
     const updateData = { name: name.trim() };
 
-    // Only update password if provided
     if (password) {
       if (password.length < 6) {
         return res.status(400).json({

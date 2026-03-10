@@ -5,7 +5,7 @@ const User = require("../models/User");
 const crypto = require("crypto");
 const mailSender = require("../utils/mailSender");
 
-// ─── Step 1: Create Razorpay Order ───────────────────────
+// ─── Create Razorpay Order ────────
 exports.capturePayment = async (req, res) => {
   try {
     const { courseId } = req.body;
@@ -62,7 +62,7 @@ exports.capturePayment = async (req, res) => {
   }
 };
 
-// ─── Step 2: Verify Signature ─────────────────────────────
+// ─── Verify Signature ───────
 exports.verifySignature = async (req, res) => {
   try {
     const {
@@ -140,7 +140,7 @@ exports.verifySignature = async (req, res) => {
   }
 };
 
-// ─── Get My Enrollments ───────────────────────────────────
+// ─── Get My Enrollments ─────────
 exports.getMyEnrollments = async (req, res) => {
   try {
     const enrollments = await Enrollment.find({

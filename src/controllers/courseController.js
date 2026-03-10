@@ -1,6 +1,6 @@
 const Course = require("../models/Course");
 
-// ─── Get All Courses ──────────────────────────────────────
+// ─── Get All Courses ───────────
 exports.getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find({}).sort({ createdAt: -1 });
@@ -11,7 +11,7 @@ exports.getAllCourses = async (req, res) => {
   }
 };
 
-// ─── Create Course ───────────────────────────────────────
+// ─── Create Course ──────────────
 exports.createCourse = async (req, res) => {
   try {
     const { courseName, courseDescription, price, thumbnail } = req.body;
@@ -48,8 +48,7 @@ exports.createCourse = async (req, res) => {
   }
 };
 
-// ─── Delete Course ────────────────────────────────────────
-// DELETE /api/course/delete-course/:id
+// ─── Delete Course ───────────
 exports.deleteCourse = async (req, res) => {
   try {
     const { id } = req.params;
@@ -64,8 +63,7 @@ exports.deleteCourse = async (req, res) => {
   }
 };
 
-// ─── Update Course ────────────────────────────────────────
-// PUT /api/course/update-course/:id
+// ─── Update Course ────────────────
 exports.updateCourse = async (req, res) => {
   try {
     const { id } = req.params;
