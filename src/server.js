@@ -28,7 +28,7 @@ app.use(cookieParser());
 // ── CORS ──────
 const allowedOrigins = process.env.FRONTEND_URL
   ? [process.env.FRONTEND_URL]
-  : ["http://localhost:5173"];
+  : ["https://razorpay-frontend-delta.vercel.app"];
 
 app.use(
   cors({
