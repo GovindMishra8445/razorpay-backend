@@ -15,22 +15,18 @@ exports.signup = async (req, res) => {
     }
 
     if (password.length < 6) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Password must be at least 6 characters",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Password must be at least 6 characters",
+      });
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User already exists with this email",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "User already exists with this email",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -77,11 +73,10 @@ exports.login = async (req, res) => {
       {
         id: user._id,
         email: user.email,
-        name: user.name,
         role: user.role,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" },
+      { expiresIn: "24h" },
     );
 
     // Cookie + JSON both (frontend uses Bearer token)
@@ -163,12 +158,10 @@ exports.forgotPassword = async (req, res) => {
     });
   } catch (error) {
     console.error("Forgot password error:", error.message);
-    return res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to send reset email. Try again.",
-      });
+    return res.status(500).json({
+      success: false,
+      message: "Failed to send reset email. Try again.",
+    });
   }
 };
 
@@ -211,12 +204,10 @@ exports.updateProfile = async (req, res) => {
     // Only update password if provided
     if (password) {
       if (password.length < 6) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "Password must be at least 6 characters",
-          });
+        return res.status(400).json({
+          success: false,
+          message: "Password must be at least 6 characters",
+        });
       }
       updateData.password = await bcrypt.hash(password, 10);
     }

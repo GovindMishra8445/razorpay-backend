@@ -2,11 +2,13 @@ const jwt = require("jsonwebtoken");
 
 exports.protect = async (req, res, next) => {
   try {
-
     const token =
       req.cookies.token ||
       req.body.token ||
       req.header("Authorization")?.replace("Bearer ", "");
+
+    console.log("TOKEN:", token);
+    console.log("SECRET:", process.env.JWT_SECRET);
 
     if (!token) {
       return res.status(401).json({
@@ -27,7 +29,6 @@ exports.protect = async (req, res, next) => {
         message: "Token Invalid",
       });
     }
-
   } catch (error) {
     return res.status(401).json({
       success: false,
